@@ -1,0 +1,266 @@
+<Window x:Class="GitPullTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:GitPullTool.Converters"
+        xmlns:behaviors="clr-namespace:GitPullTool.Behaviors"
+        mc:Ignorable="d"
+        x:Name="MainWindowRoot"
+        Title="Git 拉取工具" Height="720" Width="1200" Icon="Image/Git_ICO.ico">
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+    </Window.Resources>
+
+    <TabControl Margin="12">
+        <TabItem Header="拉取">
+            <Grid Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="330" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="6" Padding="12">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="仓库列表" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8" />
+
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+                            <Button Content="添加" Width="60" Margin="0,0,6,0" Command="{Binding AddRepoCommand}" />
+                            <Button Content="删除" Width="70" Margin="0,0,6,0" Command="{Binding RemoveSelectedCommand}" />
+                            <Button Content="全选" Width="80" Margin="0,0,6,0" Command="{Binding SelectAllCommand}" />
+                            <Button Content="清空" Width="60" Command="{Binding ClearSelectionCommand}" IsEnabled="False" />
+                        </StackPanel>
+
+                        <CheckBox DockPanel.Dock="Top" Content="单选模式" IsChecked="{Binding SingleSelection}" Margin="0,0,0,8" />
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Repos}" AlternationCount="2">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Tag" Value="#FFFFFF" />
+                                        <Style.Triggers>
+                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                <Setter Property="Tag" Value="#F3F3F3" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{Binding Tag, RelativeSource={RelativeSource AncestorType=ContentPresenter}}"
+                                                BorderBrush="#E0E0E0" BorderThickness="1" Padding="6" Margin="0,0,0,4" CornerRadius="4">
+                                            <Border.ContextMenu>
+                                                <ContextMenu DataContext="{Binding Source={x:Reference MainWindowRoot}, Path=DataContext}">
+                                                    <MenuItem Header="打开仓库"
+                                                              Command="{Binding OpenRepoCommand}"
+                                                              CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                                    <MenuItem Header="切换分支"
+                                                              Command="{Binding SwitchBranchCommand}"
+                                                              CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                                </ContextMenu>
+                                            </Border.ContextMenu>
+                                            <StackPanel>
+                                                <DockPanel>
+                                                    <CheckBox IsChecked="{Binding IsSelected}" VerticalAlignment="Top" Margin="0,2,8,0" />
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                                            <TextBlock Text="{Binding BranchDisplay}" Margin="6,0,0,0" Foreground="#888" />
+                                                        </StackPanel>
+                                                        <TextBlock Text="{Binding ValidationMessage}" FontSize="11" Foreground="Tomato"
+                                                                   Visibility="{Binding IsValid, Converter={StaticResource BoolToVisibility}, ConverterParameter=invert}" />
+                                                    </StackPanel>
+                                                </DockPanel>
+
+                                                <ItemsControl ItemsSource="{Binding NestedRepos}" Margin="22,4,0,0">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border BorderBrush="#D8E2F0"
+                                                                    BorderThickness="1"
+                                                                    Background="#F8FBFF"
+                                                                    Padding="5"
+                                                                    Margin="0,0,0,3"
+                                                                    CornerRadius="3">
+                                                                <Border.ContextMenu>
+                                                                    <ContextMenu DataContext="{Binding Source={x:Reference MainWindowRoot}, Path=DataContext}">
+                                                                        <MenuItem Header="&#x6253;&#x5F00;&#x5B50;&#x4ED3;&#x5E93;"
+                                                                                  Command="{Binding OpenNestedRepoCommand}"
+                                                                                  CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                                                        <MenuItem Header="&#x5207;&#x6362;&#x5206;&#x652F;"
+                                                                                  Command="{Binding SwitchNestedRepoBranchCommand}"
+                                                                                  CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                                                                    </ContextMenu>
+                                                                </Border.ContextMenu>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="&#x2514;" Foreground="#789" Margin="0,0,5,0" />
+                                                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#2D4C6B" />
+                                                                    <TextBlock Text="{Binding BranchDisplay}" Margin="6,0,0,0" Foreground="#888" />
+                                                                </StackPanel>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+
+                <Border Grid.Column="2" Background="#FFFFFF" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="6" Padding="12">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <TextBlock Text="设置" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8" />
+
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="90" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Git 路径" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,6,6" Text="{Binding GitPath, UpdateSourceTrigger=LostFocus}" />
+                                <Button Grid.Row="0" Grid.Column="2" Margin="0,0,0,6" Content="Browse" Command="{Binding BrowseGitCommand}" />
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="SSH 密钥" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="1" Grid.Column="1" Margin="0,0,6,6" Text="{Binding SshKeyPath, UpdateSourceTrigger=LostFocus}" />
+                                <Button Grid.Row="1" Grid.Column="2" Margin="0,0,0,6" Content="Browse" Command="{Binding BrowseKeyCommand}" />
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="SSH 用户名" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,6,6" Text="{Binding SshUser, UpdateSourceTrigger=LostFocus}" />
+                                <TextBlock Grid.Row="2" Grid.Column="2" Text=" " />
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Plink 程序" VerticalAlignment="Center" />
+                                <TextBox Grid.Row="3" Grid.Column="1" Margin="0,0,6,0" Text="{Binding PlinkPath, UpdateSourceTrigger=LostFocus}" />
+                                <Button Grid.Row="3" Grid.Column="2" Content="Browse" Command="{Binding BrowsePlinkCommand}" />
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <CheckBox Content="选择后自动拉取" IsChecked="{Binding AutoPullOnSelection}" Margin="0,0,12,0" />
+                                <CheckBox Content="包含子仓库" IsChecked="{Binding IncludeNestedRepos}" Margin="0,0,12,0" />
+                                <Button Content="拉取所选" Width="120" Command="{Binding PullSelectedCommand}" />
+                                <TextBlock Text="{Binding StatusText}" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center" Foreground="#FF0000" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBlock DockPanel.Dock="Top" Text="日志" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,6" />
+
+                        <ListBox ItemsSource="{Binding LogEntries}" behaviors:AutoScrollBehavior.IsEnabled="True" BorderBrush="#E0E0E0" BorderThickness="1">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Display}" FontFamily="Consolas" FontSize="12">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="#222" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsError}" Value="True">
+                                                        <Setter Property="Foreground" Value="#D32F2F" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="启动脚本">
+            <Grid Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="430" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#FAFAFA" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="6" Padding="12">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="启动脚本" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8" />
+
+                        <WrapPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+                            <Button Content="添加路径" Width="80" Margin="0,0,6,6" Command="{Binding AddStartupFolderCommand}" />
+                            <Button Content="删除" Width="70" Margin="0,0,6,6" Command="{Binding RemoveSelectedStartupCommand}" />
+                            <Button Content="映射项目" Width="90" Margin="0,0,6,6" Command="{Binding MapStartupProjectCommand}" />
+                            <Button Content="启动项目" Width="90" Margin="0,0,6,6" Command="{Binding StartStartupProjectCommand}" />
+                        </WrapPanel>
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding StartupFolders}" AlternationCount="2">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Tag" Value="#FFFFFF" />
+                                        <Style.Triggers>
+                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                <Setter Property="Tag" Value="#F3F3F3" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{Binding Tag, RelativeSource={RelativeSource AncestorType=ContentPresenter}}"
+                                                BorderBrush="#E0E0E0" BorderThickness="1" Padding="6" Margin="0,0,0,4" CornerRadius="4">
+                                            <DockPanel>
+                                                <RadioButton GroupName="StartupFolderSelection" IsChecked="{Binding IsSelected}" VerticalAlignment="Top" Margin="0,2,8,0" />
+                                                <StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                                        <TextBlock Text="{Binding ProjectNumberDisplay}" Margin="6,0,0,0" Foreground="#888" />
+                                                    </StackPanel>
+                                                    <TextBlock Text="{Binding ValidationMessage}" FontSize="11" Foreground="Tomato"
+                                                               Visibility="{Binding IsValid, Converter={StaticResource BoolToVisibility}, ConverterParameter=invert}" />
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+
+                <Border Grid.Column="2" Background="#FFFFFF" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="6" Padding="12">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="{Binding StatusText}" FontWeight="Bold" VerticalAlignment="Center" Foreground="#FF0000" />
+                        </StackPanel>
+
+                        <TextBlock DockPanel.Dock="Top" Text="日志" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,6" />
+
+                        <ListBox ItemsSource="{Binding LogEntries}" behaviors:AutoScrollBehavior.IsEnabled="True" BorderBrush="#E0E0E0" BorderThickness="1">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Display}" FontFamily="Consolas" FontSize="12">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="#222" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsError}" Value="True">
+                                                        <Setter Property="Foreground" Value="#D32F2F" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>

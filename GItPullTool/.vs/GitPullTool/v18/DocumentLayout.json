@@ -1,0 +1,123 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|d:\\soft_shxy\\vs2022\\tool\\gitpulltool\\gitpulltool\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|solutionrelative:gitpulltool\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|d:\\soft_shxy\\vs2022\\tool\\gitpulltool\\gitpulltool\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|solutionrelative:gitpulltool\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|d:\\soft_shxy\\vs2022\\tool\\gitpulltool\\gitpulltool\\services\\gitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|solutionrelative:gitpulltool\\services\\gitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|d:\\soft_shxy\\vs2022\\tool\\gitpulltool\\gitpulltool\\viewmodels\\logentryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E2B1ECD2-4F0D-44AF-A308-5C0E37D4FCDC}|GitPullTool\\GitPullTool.csproj|solutionrelative:gitpulltool\\viewmodels\\logentryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{5a4e9529-b6a0-46b5-be4f-0f0b239bc0eb}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "GitPullTool\\MainWindow.xaml",
+              "ToolTip": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\MainWindow.xaml",
+              "RelativeToolTip": "GitPullTool\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-02-05T13:02:04.667Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LogEntryViewModel.cs",
+              "DocumentMoniker": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\ViewModels\\LogEntryViewModel.cs",
+              "RelativeDocumentMoniker": "GitPullTool\\ViewModels\\LogEntryViewModel.cs",
+              "ToolTip": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\ViewModels\\LogEntryViewModel.cs",
+              "RelativeToolTip": "GitPullTool\\ViewModels\\LogEntryViewModel.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAA0AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T12:25:02.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainViewModel.cs",
+              "DocumentMoniker": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\ViewModels\\MainViewModel.cs",
+              "RelativeDocumentMoniker": "GitPullTool\\ViewModels\\MainViewModel.cs",
+              "ToolTip": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\ViewModels\\MainViewModel.cs",
+              "RelativeToolTip": "GitPullTool\\ViewModels\\MainViewModel.cs",
+              "ViewState": "AgIAAPoBAAAAAAAAAAAEwP8BAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T12:23:06.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GitService.cs",
+              "DocumentMoniker": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\Services\\GitService.cs",
+              "RelativeDocumentMoniker": "GitPullTool\\Services\\GitService.cs",
+              "ToolTip": "D:\\Soft_shxy\\VS2022\\Tool\\GItPullTool\\GitPullTool\\Services\\GitService.cs",
+              "RelativeToolTip": "GitPullTool\\Services\\GitService.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAArwDsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T11:47:02.645Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+﻿<Window x:Class="GitPullTool.Windows.BranchPickerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="切换分支" Height="420" Width="520" WindowStartupLocation="CenterOwner" ResizeMode="CanResize">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="PromptTextBlock" Text="请选择分支：" FontWeight="SemiBold" />
+
+        <TextBox x:Name="FilterBox" Grid.Row="1" Margin="0,6,0,8" Height="28" VerticalContentAlignment="Center" ToolTip="输入关键字过滤" />
+
+        <ListBox x:Name="BranchList" Grid.Row="2" Margin="0,0,0,8" />
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="确定" Width="80" Margin="0,0,8,0" IsDefault="True" Click="OnOk" />
+            <Button Content="取消" Width="80" IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</Window>
