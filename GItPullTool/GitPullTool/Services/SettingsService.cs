@@ -73,15 +73,15 @@ public sealed class SettingsService
 
     private static string ResolveConfigDirectory()
     {
-        if (Directory.Exists(FixedConfigRoot))
-        {
-            return Path.Combine(FixedConfigRoot, "Config");
-        }
-
         var repoRoot = FindRepoRoot(AppContext.BaseDirectory);
         if (!string.IsNullOrWhiteSpace(repoRoot))
         {
             return Path.Combine(repoRoot, "Config");
+        }
+
+        if (Directory.Exists(FixedConfigRoot))
+        {
+            return Path.Combine(FixedConfigRoot, "Config");
         }
 
         return Path.Combine(AppContext.BaseDirectory, "Config");

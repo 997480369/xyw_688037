@@ -22,6 +22,9 @@ public sealed partial class NestedRepoItemViewModel : ObservableObject
     [ObservableProperty]
     private bool isBranchLoading;
 
+    [ObservableProperty]
+    private bool isSearchVisible = true;
+
     public string BranchDisplay
         => IsBranchLoading ? "[loading...]" : string.IsNullOrWhiteSpace(BranchName) ? "[unknown]" : $"[{BranchName}]";
 

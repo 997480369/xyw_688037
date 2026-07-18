@@ -25,17 +25,26 @@
                     <DockPanel>
                         <TextBlock DockPanel.Dock="Top" Text="仓库列表" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8" />
 
-                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+                        <WrapPanel DockPanel.Dock="Top" Margin="0,0,0,8">
                             <Button Content="添加" Width="60" Margin="0,0,6,0" Command="{Binding AddRepoCommand}" />
                             <Button Content="删除" Width="70" Margin="0,0,6,0" Command="{Binding RemoveSelectedCommand}" />
                             <Button Content="全选" Width="80" Margin="0,0,6,0" Command="{Binding SelectAllCommand}" />
-                            <Button Content="清空" Width="60" Command="{Binding ClearSelectionCommand}" IsEnabled="False" />
-                        </StackPanel>
+                            <Button Content="清空" Width="60" Margin="0,0,6,0" Command="{Binding ClearSelectionCommand}" IsEnabled="False" />
+                            <Button Content="刷新" Width="60" Margin="0,0,6,0" Command="{Binding RefreshRepoBranchesCommand}" />
+                        </WrapPanel>
 
                         <CheckBox DockPanel.Dock="Top" Content="单选模式" IsChecked="{Binding SingleSelection}" Margin="0,0,0,8" />
 
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+                            <TextBlock Text="&#x641C;&#x7D22;" VerticalAlignment="Center" Margin="0,0,6,0" Foreground="#555" />
+                            <TextBox Height="28"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding RepoSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="&#x8F93;&#x5165;&#x4ED3;&#x5E93;&#x540D;&#x3001;&#x8DEF;&#x5F84;&#x6216;&#x5206;&#x652F;&#x8FDB;&#x884C;&#x641C;&#x7D22;" />
+                        </DockPanel>
+
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding Repos}" AlternationCount="2">
+                            <ItemsControl ItemsSource="{Binding ReposView}" AlternationCount="2">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ContentPresenter">
                                         <Setter Property="Tag" Value="#FFFFFF" />
@@ -52,6 +61,9 @@
                                                 BorderBrush="#E0E0E0" BorderThickness="1" Padding="6" Margin="0,0,0,4" CornerRadius="4">
                                             <Border.ContextMenu>
                                                 <ContextMenu DataContext="{Binding Source={x:Reference MainWindowRoot}, Path=DataContext}">
+                                                    <MenuItem Header="刷新仓库分支"
+                                                              Command="{Binding RefreshSingleRepoBranchCommand}"
+                                                              CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                                     <MenuItem Header="打开仓库"
                                                               Command="{Binding OpenRepoCommand}"
                                                               CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
@@ -81,7 +93,8 @@
                                                                     Background="#F8FBFF"
                                                                     Padding="5"
                                                                     Margin="0,0,0,3"
-                                                                    CornerRadius="3">
+                                                                    CornerRadius="3"
+                                                                    Visibility="{Binding IsSearchVisible, Converter={StaticResource BoolToVisibility}}">
                                                                 <Border.ContextMenu>
                                                                     <ContextMenu DataContext="{Binding Source={x:Reference MainWindowRoot}, Path=DataContext}">
                                                                         <MenuItem Header="&#x6253;&#x5F00;&#x5B50;&#x4ED3;&#x5E93;"
@@ -193,12 +206,21 @@
                         <WrapPanel DockPanel.Dock="Top" Margin="0,0,0,8">
                             <Button Content="添加路径" Width="80" Margin="0,0,6,6" Command="{Binding AddStartupFolderCommand}" />
                             <Button Content="删除" Width="70" Margin="0,0,6,6" Command="{Binding RemoveSelectedStartupCommand}" />
+                            <Button Content="刷新" Width="70" Margin="0,0,6,6" Command="{Binding RefreshStartupBranchesCommand}" />
                             <Button Content="映射项目" Width="90" Margin="0,0,6,6" Command="{Binding MapStartupProjectCommand}" />
                             <Button Content="启动项目" Width="90" Margin="0,0,6,6" Command="{Binding StartStartupProjectCommand}" />
                         </WrapPanel>
 
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,8">
+                            <TextBlock Text="&#x641C;&#x7D22;" VerticalAlignment="Center" Margin="0,0,6,0" Foreground="#555" />
+                            <TextBox Height="28"
+                                     VerticalContentAlignment="Center"
+                                     Text="{Binding StartupSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="&#x8F93;&#x5165;&#x542F;&#x52A8;&#x9879;&#x76EE;&#x540D;&#x3001;&#x8DEF;&#x5F84;&#x6216;&#x5206;&#x652F;&#x8FDB;&#x884C;&#x641C;&#x7D22;" />
+                        </DockPanel>
+
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding StartupFolders}" AlternationCount="2">
+                            <ItemsControl ItemsSource="{Binding StartupFoldersView}" AlternationCount="2">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ContentPresenter">
                                         <Setter Property="Tag" Value="#FFFFFF" />

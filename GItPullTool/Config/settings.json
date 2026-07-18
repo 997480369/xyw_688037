@@ -1,59 +1,74 @@
 {
   "RepoPaths": [
-    "D:\\Soft_shxy\\VS2019\\Project\\S25004",
     "E:\\Soft_shxy\\D_Soft\\S25004",
+    "E:\\Soft_shxy\\D_Soft\\S24007",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25004",
     "E:\\Soft_shxy\\D_Soft\\S25006",
-    "D:\\Soft_shxy\\VS2019\\Project\\S25006_New",
-    "D:\\Soft_shxy\\VS2019\\Project\\S25007",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0",
     "E:\\Soft_shxy\\D_Soft\\S25007",
     "E:\\Soft_shxy\\D_Soft\\S25008",
     "D:\\Soft_shxy\\VS2019\\Project\\S25009_\u5206\u8DEF\u5F84",
     "D:\\Soft_shxy\\VS2019\\Project\\S25010",
     "E:\\Soft_shxy\\D_Soft\\S25012",
     "D:\\Soft_shxy\\VS2019\\Project\\S25014_\u5206\u8DEF\u5F84",
-    "D:\\Soft_shxy\\VS2019\\Project\\S25017",
     "E:\\Soft_shxy\\D_Soft\\S25018",
-    "D:\\Soft_shxy\\VS2019\\Project\\S25019",
-    "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0",
-    "D:\\Soft_shxy\\VS2019\\Project\\S25022",
+    "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0",
     "D:\\Soft_shxy\\VS2019\\Project\\S25023",
-    "D:\\Soft_shxy\\VS2019\\Project\\S25024",
     "E:\\Soft_shxy\\D_Soft\\S25025",
-    "E:\\Soft_shxy\\D_Soft\\S25027_new",
     "E:\\Soft_shxy\\D_Soft\\S26001",
-    "E:\\Soft_shxy\\D_Soft\\S26002",
-    "E:\\Soft_shxy\\D_Soft\\S26007",
-    "E:\\Soft_shxy\\D_Soft\\S2300_new",
-    "D:\\Soft_shxy\\VS2019\\Project\\Y25003",
-    "E:\\Soft_shxy\\D_Soft\\Y25004"
+    "E:\\Soft_shxy\\D_Soft\\S26004",
+    "E:\\Soft_shxy\\D_Soft\\S26008",
+    "E:\\Soft_shxy\\D_Soft\\S26009",
+    "E:\\Soft_shxy\\D_Soft\\S26010",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S26011",
+    "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0",
+    "D:\\Soft_shxy\\VS2022\\Tool\\xyw_688037",
+    "D:\\Soft_shxy\\VS2022\\KingsemiToolBox",
+    "D:\\Soft_shxy\\VS2019\\Project\\kingcontrol_gui",
+    "E:\\Soft_shxy\\D_Soft\\Y25004",
+    "E:\\Soft_shxy\\D_Soft\\Y25015"
   ],
   "SelectedRepoPaths": [
-    "E:\\Soft_shxy\\D_Soft\\S26002"
+    "E:\\Soft_shxy\\D_Soft\\S26011"
   ],
   "StartupFolderPaths": [
     "E:\\Soft_shxy\\D_Soft\\S24005",
+    "E:\\Soft_shxy\\D_Soft\\S24006",
     "E:\\Soft_shxy\\D_Soft\\S24007",
     "D:\\Soft_shxy\\VS2019\\Project\\S25004",
     "E:\\Soft_shxy\\D_Soft\\S25006",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_New",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0",
     "E:\\Soft_shxy\\D_Soft\\S25007",
     "E:\\Soft_shxy\\D_Soft\\S25008",
     "D:\\Soft_shxy\\VS2019\\Project\\S25010",
-    "E:\\Soft_shxy\\D_Soft\\S25015",
     "E:\\Soft_shxy\\D_Soft\\S25018",
     "D:\\Soft_shxy\\VS2019\\Project\\S25019",
     "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0",
     "D:\\Soft_shxy\\VS2019\\Project\\S25022",
+    "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0",
     "D:\\Soft_shxy\\VS2019\\Project\\S25023",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25023_\u65B0\u5E73\u53F0",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25024",
     "E:\\Soft_shxy\\D_Soft\\S25025",
     "E:\\Soft_shxy\\D_Soft\\S25027_new",
     "E:\\Soft_shxy\\D_Soft\\S25027_new_process",
     "E:\\Soft_shxy\\D_Soft\\S26001",
     "E:\\Soft_shxy\\D_Soft\\S26002",
-    "E:\\Soft_shxy\\D_Soft\\S26007",
-    "E:\\Soft_shxy\\D_Soft\\Y25004"
+    "E:\\Soft_shxy\\D_Soft\\S26004",
+    "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S26008",
+    "E:\\Soft_shxy\\D_Soft\\S26009",
+    "E:\\Soft_shxy\\D_Soft\\S26010",
+    "E:\\Soft_shxy\\D_Soft\\S26011",
+    "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\Y25004",
+    "E:\\Soft_shxy\\D_Soft\\Y25015"
   ],
   "SelectedStartupFolderPaths": [
-    "E:\\Soft_shxy\\D_Soft\\S25027_new_process"
+    "E:\\Soft_shxy\\D_Soft\\S26011"
   ],
   "SshKeyPath": "D:\\key\\private.ppk",
   "SshUser": "zwh",
@@ -61,5 +76,223 @@
   "GitPath": "D:\\Program Files\\Git\\cmd\\git.exe",
   "AutoPullOnSelection": false,
   "SingleSelection": true,
-  "IncludeNestedRepos": true
+  "IncludeNestedRepos": true,
+  "RepoBranchCache": {
+    "E:\\Soft_shxy\\D_Soft\\S25004": "S24002_\u5C4F\u853DIO_Monitor_zwh_0610",
+    "E:\\Soft_shxy\\D_Soft\\S24007": "S24007_ACC2_zwh_0525",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25004": "Y25003_eqda_zwh_0702",
+    "E:\\Soft_shxy\\D_Soft\\S25006": "S25006_\u4FEE\u6539\u5316\u5B66\u54C1\u540D\u5B57_zwh_0616",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0": "S25006_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S25007": "S25007",
+    "E:\\Soft_shxy\\D_Soft\\S25008": "S25008",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25009_\u5206\u8DEF\u5F84": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25010": "S25010",
+    "E:\\Soft_shxy\\D_Soft\\S25012": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25014_\u5206\u8DEF\u5F84": "S25014_\u5206\u8DEF\u5F84",
+    "E:\\Soft_shxy\\D_Soft\\S25018": "S25018",
+    "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0": "S25022_\u65B0\u5E73\u53F0",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25023": "S25023_master",
+    "E:\\Soft_shxy\\D_Soft\\S25025": "S25024",
+    "E:\\Soft_shxy\\D_Soft\\S26001": "S26001_master",
+    "E:\\Soft_shxy\\D_Soft\\S26004": "S26004",
+    "E:\\Soft_shxy\\D_Soft\\S26008": "S26008-dev",
+    "E:\\Soft_shxy\\D_Soft\\S26009": "S26009",
+    "E:\\Soft_shxy\\D_Soft\\S26010": "S26010_\u65B0\u5E73\u53F0",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0": "S26011_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0": "S26011_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S26011": "S26014",
+    "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0": "S26014_\u65B0\u5E73\u53F0",
+    "D:\\Soft_shxy\\VS2022\\Tool\\xyw_688037": "main",
+    "D:\\Soft_shxy\\VS2022\\KingsemiToolBox": "master",
+    "D:\\Soft_shxy\\VS2019\\Project\\kingcontrol_gui": "MutliSideClean",
+    "E:\\Soft_shxy\\D_Soft\\Y25004": "Y25004",
+    "E:\\Soft_shxy\\D_Soft\\Y25015": "Y25015"
+  },
+  "RepoNestedPathsCache": {
+    "E:\\Soft_shxy\\D_Soft\\S25004": [
+      "E:\\Soft_shxy\\D_Soft\\S25004\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S25004\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S24007": [
+      "E:\\Soft_shxy\\D_Soft\\S24007\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S24007\\Engine"
+    ],
+    "D:\\Soft_shxy\\VS2019\\Project\\S25004": [
+      "D:\\Soft_shxy\\VS2019\\Project\\S25004\\CTC\\ks_common_core",
+      "D:\\Soft_shxy\\VS2019\\Project\\S25004\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S25006": [
+      "E:\\Soft_shxy\\D_Soft\\S25006\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S25006\\Engine"
+    ],
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0": [
+      "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0\\CTC\\ks_common_core",
+      "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S25007": [
+      "E:\\Soft_shxy\\D_Soft\\S25007\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S25007\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S25008": [
+      "E:\\Soft_shxy\\D_Soft\\S25008\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S25008\\Engine"
+    ],
+    "D:\\Soft_shxy\\VS2019\\Project\\S25009_\u5206\u8DEF\u5F84": [],
+    "D:\\Soft_shxy\\VS2019\\Project\\S25010": [
+      "D:\\Soft_shxy\\VS2019\\Project\\S25010\\CTC\\ks_common_core",
+      "D:\\Soft_shxy\\VS2019\\Project\\S25010\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S25012": [],
+    "D:\\Soft_shxy\\VS2019\\Project\\S25014_\u5206\u8DEF\u5F84": [
+      "D:\\Soft_shxy\\VS2019\\Project\\S25014_\u5206\u8DEF\u5F84\\CTC\\ks_common_core",
+      "D:\\Soft_shxy\\VS2019\\Project\\S25014_\u5206\u8DEF\u5F84\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S25018": [
+      "E:\\Soft_shxy\\D_Soft\\S25018\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S25018\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0": [
+      "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0\\Engine"
+    ],
+    "D:\\Soft_shxy\\VS2019\\Project\\S25023": [
+      "D:\\Soft_shxy\\VS2019\\Project\\S25023\\CTC\\ks_common_core",
+      "D:\\Soft_shxy\\VS2019\\Project\\S25023\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S25025": [
+      "E:\\Soft_shxy\\D_Soft\\S25025\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S25025\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S26001": [
+      "E:\\Soft_shxy\\D_Soft\\S26001\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S26001\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S26004": [
+      "E:\\Soft_shxy\\D_Soft\\S26004\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S26004\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S26008": [
+      "E:\\Soft_shxy\\D_Soft\\S26008\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S26008\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S26009": [
+      "E:\\Soft_shxy\\D_Soft\\S26009\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S26009\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S26010": [
+      "E:\\Soft_shxy\\D_Soft\\S26010\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S26010\\Engine"
+    ],
+    "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0": [
+      "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0\\CTC\\ks_common_core",
+      "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0": [
+      "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\S26011": [
+      "E:\\Soft_shxy\\D_Soft\\S26011\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\S26011\\Engine"
+    ],
+    "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0": [
+      "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0\\CTC\\ks_common_core",
+      "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0\\Engine"
+    ],
+    "D:\\Soft_shxy\\VS2022\\Tool\\xyw_688037": [],
+    "D:\\Soft_shxy\\VS2022\\KingsemiToolBox": [],
+    "D:\\Soft_shxy\\VS2019\\Project\\kingcontrol_gui": [],
+    "E:\\Soft_shxy\\D_Soft\\Y25004": [
+      "E:\\Soft_shxy\\D_Soft\\Y25004\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\Y25004\\Engine"
+    ],
+    "E:\\Soft_shxy\\D_Soft\\Y25015": [
+      "E:\\Soft_shxy\\D_Soft\\Y25015\\CTC\\ks_common_core",
+      "E:\\Soft_shxy\\D_Soft\\Y25015\\Engine"
+    ]
+  },
+  "NestedRepoBranchCache": {
+    "E:\\Soft_shxy\\D_Soft\\S25004\\CTC\\ks_common_core": "SDS",
+    "E:\\Soft_shxy\\D_Soft\\S25004\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S24007\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S24007\\Engine": "4Arm",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25004\\CTC\\ks_common_core": "SDS",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25004\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S25006\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S25006\\Engine": "4Arm",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0\\CTC\\ks_common_core": "Branch_KingControl_24Chamber",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0\\Engine": "KingControl",
+    "E:\\Soft_shxy\\D_Soft\\S25007\\CTC\\ks_common_core": "master_TR2Stop_zwh_0318",
+    "E:\\Soft_shxy\\D_Soft\\S25007\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S25008\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S25008\\Engine": "4Arm",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25010\\CTC\\ks_common_core": "SDS_SpeedChart\u4FEE\u590D_zwh_0526",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25010\\Engine": "4Arm",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25014_\u5206\u8DEF\u5F84\\CTC\\ks_common_core": "master",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25014_\u5206\u8DEF\u5F84\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S25018\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S25018\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0\\CTC\\ks_common_core": "Branch_KingControl_24Chamber",
+    "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0\\Engine": "KingControl",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25023\\CTC\\ks_common_core": "master",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25023\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S25025\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S25025\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S26001\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S26001\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S26004\\CTC\\ks_common_core": "SDS",
+    "E:\\Soft_shxy\\D_Soft\\S26004\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S26008\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S26008\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S26009\\CTC\\ks_common_core": "SDS",
+    "E:\\Soft_shxy\\D_Soft\\S26009\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\S26010\\CTC\\ks_common_core": "Branch_KingControl_24Chamber",
+    "E:\\Soft_shxy\\D_Soft\\S26010\\Engine": "KingControl",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0\\CTC\\ks_common_core": "Branch_KingControl_24Chamber",
+    "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0\\Engine": "KingControl",
+    "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0\\CTC\\ks_common_core": "Branch_KingControl_24Chamber_process_zwh_0707",
+    "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0\\Engine": "KingControl",
+    "E:\\Soft_shxy\\D_Soft\\S26011\\CTC\\ks_common_core": "master",
+    "E:\\Soft_shxy\\D_Soft\\S26011\\Engine": "4Arm",
+    "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0\\CTC\\ks_common_core": "Branch_KingControl_24Chamber",
+    "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0\\Engine": "KingControl",
+    "E:\\Soft_shxy\\D_Soft\\Y25004\\CTC\\ks_common_core": "24\u8154\u4F53_\u9759\u6001\u4EE3\u7801\u68C0\u6D4B_zwh_0513",
+    "E:\\Soft_shxy\\D_Soft\\Y25004\\Engine": "4Arm",
+    "E:\\Soft_shxy\\D_Soft\\Y25015\\CTC\\ks_common_core": "MultiSideClean",
+    "E:\\Soft_shxy\\D_Soft\\Y25015\\Engine": "MultiiSideClean"
+  },
+  "StartupProjectNumberCache": {
+    "E:\\Soft_shxy\\D_Soft\\S24005": null,
+    "E:\\Soft_shxy\\D_Soft\\S24006": null,
+    "E:\\Soft_shxy\\D_Soft\\S24007": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25004": null,
+    "E:\\Soft_shxy\\D_Soft\\S25006": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_New": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25006_\u65B0\u5E73\u53F0": null,
+    "E:\\Soft_shxy\\D_Soft\\S25007": null,
+    "E:\\Soft_shxy\\D_Soft\\S25008": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25010": null,
+    "E:\\Soft_shxy\\D_Soft\\S25018": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25019": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25019_\u65B0\u5E73\u53F0": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25022": null,
+    "E:\\Soft_shxy\\D_Soft\\S25022_\u65B0\u5E73\u53F0": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25023": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25023_\u65B0\u5E73\u53F0": null,
+    "D:\\Soft_shxy\\VS2019\\Project\\S25024": null,
+    "E:\\Soft_shxy\\D_Soft\\S25025": null,
+    "E:\\Soft_shxy\\D_Soft\\S25027_new": null,
+    "E:\\Soft_shxy\\D_Soft\\S25027_new_process": null,
+    "E:\\Soft_shxy\\D_Soft\\S26001": "S26001_master",
+    "E:\\Soft_shxy\\D_Soft\\S26002": null,
+    "E:\\Soft_shxy\\D_Soft\\S26004": null,
+    "E:\\Soft_shxy\\D_Soft\\S26007_\u65B0\u5E73\u53F0": "S26007_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S26008": "S26010",
+    "E:\\Soft_shxy\\D_Soft\\S26009": "S26009",
+    "E:\\Soft_shxy\\D_Soft\\S26010": "S26010_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\S26011": "S26014",
+    "D:\\Soft_shxy\\VS2019\\Project\\S26011_\u65B0\u5E73\u53F0": "S26014_\u65B0\u5E73\u53F0",
+    "E:\\Soft_shxy\\D_Soft\\Y25004": null,
+    "E:\\Soft_shxy\\D_Soft\\Y25015": "Y25015"
+  }
 }

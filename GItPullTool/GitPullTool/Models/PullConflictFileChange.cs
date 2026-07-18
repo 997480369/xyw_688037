@@ -36,4 +36,5 @@ public sealed class PullConflictFileChange
     public bool IsUntracked { get; }
     public string DisplayText => $"{RelativePath} ({StatusText})";
     public bool CanRestore => !IsUntracked;
+    public string DeleteActionText => "\u5220\u9664\u6b64\u6587\u4ef6";
 }

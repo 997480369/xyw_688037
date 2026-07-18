@@ -133,19 +133,55 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox Header="&#x51B2;&#x7A81;&#x6587;&#x4EF6;" Grid.Column="0">
-                <ListBox x:Name="FileList"
-                         DisplayMemberPath="DisplayText"
-                         SelectionChanged="OnSelectionChanged"
-                         MouseRightButtonUp="OnFileListRightClick">
-                    <ListBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="&#x8FD8;&#x539F;&#x6B64;&#x6587;&#x4EF6;"
-                                      IsEnabled="{Binding PlacementTarget.SelectedItem.CanRestore, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      Click="OnRestoreFileClick" />
-                            <MenuItem Header="&#x5220;&#x9664;&#x6B64;&#x6587;&#x4EF6;" Click="OnDeleteFileClick" />
-                        </ContextMenu>
-                    </ListBox.ContextMenu>
-                </ListBox>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0">
+                        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,4">
+                            <TextBlock Text="&#x5DF2;&#x8DDF;&#x8E2A;&#x6587;&#x4EF6;" FontWeight="SemiBold" />
+                            <WrapPanel Margin="0,4,0,0">
+                                <Button x:Name="RestoreTrackedButton" Content="&#x4E00;&#x952E;&#x8FD8;&#x539F;" Width="82" Margin="0,0,6,0" Click="OnRestoreTrackedAllClick" />
+                                <Button x:Name="DeleteTrackedButton" Content="&#x4E00;&#x952E;&#x5220;&#x9664;" Width="82" Click="OnDeleteTrackedAllClick" />
+                            </WrapPanel>
+                        </StackPanel>
+                        <ListBox x:Name="TrackedFileList"
+                                 DisplayMemberPath="DisplayText"
+                                 SelectionChanged="OnSelectionChanged"
+                                 MouseRightButtonUp="OnFileListRightClick">
+                            <ListBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="&#x8FD8;&#x539F;&#x6B64;&#x6587;&#x4EF6;" Click="OnRestoreFileClick" />
+                                    <MenuItem Header="{Binding PlacementTarget.SelectedItem.DeleteActionText, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                              Click="OnDeleteFileClick" />
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="2">
+                        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,4">
+                            <TextBlock Text="&#x672A;&#x8DDF;&#x8E2A;&#x6587;&#x4EF6;" FontWeight="SemiBold" />
+                            <WrapPanel Margin="0,4,0,0">
+                                <Button x:Name="RestoreUntrackedButton" Content="&#x4E00;&#x952E;&#x8FD8;&#x539F;" Width="82" Margin="0,0,6,0" IsEnabled="False" />
+                                <Button x:Name="DeleteUntrackedButton" Content="&#x4E00;&#x952E;&#x5220;&#x9664;" Width="82" Click="OnDeleteUntrackedAllClick" />
+                            </WrapPanel>
+                        </StackPanel>
+                        <ListBox x:Name="UntrackedFileList"
+                                 DisplayMemberPath="DisplayText"
+                                 SelectionChanged="OnSelectionChanged"
+                                 MouseRightButtonUp="OnFileListRightClick">
+                            <ListBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="&#x5220;&#x9664;&#x6B64;&#x6587;&#x4EF6;" Click="OnDeleteFileClick" />
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+                    </DockPanel>
+                </Grid>
             </GroupBox>
 
             <Grid Grid.Column="2">

@@ -495,8 +495,10 @@ public sealed class GitService
 
     public Task<bool> DeleteConflictFileAsync(
         string repoPath,
+        GitExecutionOptions options,
         PullConflictFileChange file,
-        Action<string> log)
+        Action<string> log,
+        CancellationToken cancellationToken)
     {
         if (file is null)
         {
@@ -507,6 +509,11 @@ public sealed class GitService
         {
             log(deleteError ?? $"[FAIL] Unable to delete file: {file.RelativePath}");
             return Task.FromResult(false);
+        }
+
+        if (!file.IsUntracked)
+        {
+            log($"[WARN] Deleted tracked file physically. Git may still treat it as a local deletion change: {file.RelativePath}");
         }
 
         return Task.FromResult(true);

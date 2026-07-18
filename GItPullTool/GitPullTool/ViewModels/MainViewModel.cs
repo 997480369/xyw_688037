@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GitPullTool.Models;
@@ -19,6 +20,9 @@ public sealed partial class MainViewModel : ObservableObject
     private readonly GitService gitService;
     private readonly SettingsService settingsService;
     private readonly UserCodeDialogService userCodeDialogService;
+    private readonly ICollectionView reposView;
+    private readonly ICollectionView startupFoldersView;
+    private AppSettings currentSettings = new();
     private CancellationTokenSource? pullCts;
     private bool isInitializing;
 
@@ -34,7 +38,11 @@ public sealed partial class MainViewModel : ObservableObject
         this.userCodeDialogService = userCodeDialogService;
 
         Repos = new ObservableCollection<RepoItemViewModel>();
+        reposView = CollectionViewSource.GetDefaultView(Repos);
+        reposView.Filter = FilterRepo;
         StartupFolders = new ObservableCollection<StartupFolderItemViewModel>();
+        startupFoldersView = CollectionViewSource.GetDefaultView(StartupFolders);
+        startupFoldersView.Filter = FilterStartupFolder;
         LogEntries = new ObservableCollection<LogEntryViewModel>();
 
         AddRepoCommand = new RelayCommand(AddRepo);
@@ -45,7 +53,9 @@ public sealed partial class MainViewModel : ObservableObject
         BrowsePlinkCommand = new RelayCommand(BrowsePlink);
         BrowseGitCommand = new RelayCommand(BrowseGit);
         PullSelectedCommand = new AsyncRelayCommand(PullSelectedAsync, CanPull);
+        RefreshRepoBranchesCommand = new AsyncRelayCommand(RefreshRepoBranchesAsync, () => !IsBusy);
         OpenRepoCommand = new RelayCommand<RepoItemViewModel>(OpenRepo);
+        RefreshSingleRepoBranchCommand = new AsyncRelayCommand<RepoItemViewModel>(RefreshSingleRepoBranchAsync, CanRefreshRepoBranch);
         SwitchBranchCommand = new AsyncRelayCommand<RepoItemViewModel>(SwitchBranchAsync, CanSwitchBranch);
         SwitchNestedBranchCommand = new AsyncRelayCommand<RepoItemViewModel>(SwitchNestedBranchAsync, CanSwitchBranch);
         OpenNestedRepoCommand = new RelayCommand<NestedRepoItemViewModel>(OpenNestedRepo);
@@ -53,12 +63,15 @@ public sealed partial class MainViewModel : ObservableObject
         AddStartupFolderCommand = new RelayCommand(AddStartupFolder);
         AddSelectedReposToStartupCommand = new RelayCommand(AddSelectedReposToStartup, () => Repos.Any(r => r.IsSelected));
         RemoveSelectedStartupCommand = new RelayCommand(RemoveSelectedStartup, () => StartupFolders.Any(f => f.IsSelected));
+        RefreshStartupBranchesCommand = new AsyncRelayCommand(RefreshStartupBranchesAsync, () => !IsBusy);
         MapStartupProjectCommand = new AsyncRelayCommand(() => RunStartupScriptsAsync(UserCodeDialogChoice.MapOnly), CanRunStartupScripts);
         StartStartupProjectCommand = new AsyncRelayCommand(() => RunStartupScriptsAsync(UserCodeDialogChoice.StartSystem), CanRunStartupScripts);
     }
 
     public ObservableCollection<RepoItemViewModel> Repos { get; }
+    public ICollectionView ReposView => reposView;
     public ObservableCollection<StartupFolderItemViewModel> StartupFolders { get; }
+    public ICollectionView StartupFoldersView => startupFoldersView;
     public ObservableCollection<LogEntryViewModel> LogEntries { get; }
 
     public IRelayCommand AddRepoCommand { get; }
@@ -69,7 +82,9 @@ public sealed partial class MainViewModel : ObservableObject
     public IRelayCommand BrowsePlinkCommand { get; }
     public IRelayCommand BrowseGitCommand { get; }
     public IAsyncRelayCommand PullSelectedCommand { get; }
+    public IAsyncRelayCommand RefreshRepoBranchesCommand { get; }
     public IRelayCommand<RepoItemViewModel> OpenRepoCommand { get; }
+    public IAsyncRelayCommand<RepoItemViewModel> RefreshSingleRepoBranchCommand { get; }
     public IAsyncRelayCommand<RepoItemViewModel> SwitchBranchCommand { get; }
     public IAsyncRelayCommand<RepoItemViewModel> SwitchNestedBranchCommand { get; }
     public IRelayCommand<NestedRepoItemViewModel> OpenNestedRepoCommand { get; }
@@ -77,6 +92,7 @@ public sealed partial class MainViewModel : ObservableObject
     public IRelayCommand AddStartupFolderCommand { get; }
     public IRelayCommand AddSelectedReposToStartupCommand { get; }
     public IRelayCommand RemoveSelectedStartupCommand { get; }
+    public IAsyncRelayCommand RefreshStartupBranchesCommand { get; }
     public IAsyncRelayCommand MapStartupProjectCommand { get; }
     public IAsyncRelayCommand StartStartupProjectCommand { get; }
 
@@ -102,6 +118,12 @@ public sealed partial class MainViewModel : ObservableObject
     private bool includeNestedRepos;
 
     [ObservableProperty]
+    private string? repoSearchText;
+
+    [ObservableProperty]
+    private string? startupSearchText;
+
+    [ObservableProperty]
     private bool isBusy;
 
     [ObservableProperty]
@@ -110,35 +132,42 @@ public sealed partial class MainViewModel : ObservableObject
     public void Initialize()
     {
         isInitializing = true;
-        var settings = settingsService.Load();
-        SshKeyPath = settings.SshKeyPath;
-        SshUser = settings.SshUser;
-        PlinkPath = settings.PlinkPath;
-        GitPath = settings.GitPath;
-        AutoPullOnSelection = settings.AutoPullOnSelection;
-        SingleSelection = settings.SingleSelection;
-        IncludeNestedRepos = settings.IncludeNestedRepos;
+        currentSettings = settingsService.Load();
+        var shouldSeedStartupFolders = currentSettings.StartupFolderPaths.Count == 0 && currentSettings.RepoPaths.Count > 0;
+        SshKeyPath = currentSettings.SshKeyPath;
+        SshUser = currentSettings.SshUser;
+        PlinkPath = currentSettings.PlinkPath;
+        GitPath = currentSettings.GitPath;
+        AutoPullOnSelection = currentSettings.AutoPullOnSelection;
+        SingleSelection = currentSettings.SingleSelection;
+        IncludeNestedRepos = currentSettings.IncludeNestedRepos;
 
-        foreach (var path in settings.RepoPaths.Distinct(StringComparer.OrdinalIgnoreCase))
+        foreach (var path in currentSettings.RepoPaths.Distinct(StringComparer.OrdinalIgnoreCase))
         {
             AddRepoInternal(path, false);
         }
 
-        foreach (var path in settings.StartupFolderPaths.Distinct(StringComparer.OrdinalIgnoreCase))
+        var startupFolderPaths = shouldSeedStartupFolders
+            ? currentSettings.RepoPaths
+            : currentSettings.StartupFolderPaths;
+        foreach (var path in startupFolderPaths.Distinct(StringComparer.OrdinalIgnoreCase))
         {
             AddStartupFolderInternal(path, false);
         }
 
         SortRepos();
         SortStartupFolders();
+        ApplyCachedRepoState();
+        SortRepos();
+        ApplyCachedStartupState();
 
-        var selected = settings.SelectedRepoPaths.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var selected = currentSettings.SelectedRepoPaths.ToHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var repo in Repos)
         {
             repo.IsSelected = selected.Contains(repo.Path);
         }
 
-        var selectedStartupFolders = settings.SelectedStartupFolderPaths.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var selectedStartupFolders = currentSettings.SelectedStartupFolderPaths.ToHashSet(StringComparer.OrdinalIgnoreCase);
         foreach (var startupFolder in StartupFolders)
         {
             startupFolder.IsSelected = selectedStartupFolders.Contains(startupFolder.Path);
@@ -147,13 +176,25 @@ public sealed partial class MainViewModel : ObservableObject
         isInitializing = false;
         var loadedPath = settingsService.LastLoadedPath ?? settingsService.SettingsPath;
         AppendLog($"Loaded settings: {loadedPath}");
-        _ = RefreshBranchesAsync(Repos);
-        _ = RefreshStartupProjectNumbersAsync(StartupFolders);
+        if (shouldSeedStartupFolders)
+        {
+            AppendLog("[INFO] Startup script list was empty. Seeded it from repository list.");
+            Save();
+        }
+        else
+        {
+            AppendLog("[CACHE] Loaded cached repository branches and startup project numbers.");
+        }
     }
 
     public void Save()
     {
-        var settings = new AppSettings
+        Save(appendLog: true);
+    }
+
+    private void Save(bool appendLog)
+    {
+        currentSettings = new AppSettings
         {
             RepoPaths = Repos.Select(r => r.Path).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
             SelectedRepoPaths = Repos.Where(r => r.IsSelected).Select(r => r.Path).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
@@ -165,11 +206,18 @@ public sealed partial class MainViewModel : ObservableObject
             GitPath = GitPath,
             AutoPullOnSelection = AutoPullOnSelection,
             SingleSelection = SingleSelection,
-            IncludeNestedRepos = IncludeNestedRepos
+            IncludeNestedRepos = IncludeNestedRepos,
+            RepoBranchCache = BuildRepoBranchCache(),
+            RepoNestedPathsCache = BuildRepoNestedPathsCache(),
+            NestedRepoBranchCache = BuildNestedRepoBranchCache(),
+            StartupProjectNumberCache = BuildStartupProjectNumberCache()
         };
 
-        settingsService.Save(settings);
-        AppendLog($"Saved settings: {settingsService.SettingsPath}");
+        settingsService.Save(currentSettings);
+        if (appendLog)
+        {
+            AppendLog($"Saved settings: {settingsService.SettingsPath}");
+        }
     }
 
     private void AddRepo()
@@ -428,8 +476,16 @@ public sealed partial class MainViewModel : ObservableObject
                     pullCts.Token),
                 file => gitService.DeleteConflictFileAsync(
                     conflictInfo.RepoPath,
+                    new GitExecutionOptions
+                    {
+                        GitPath = GitPath,
+                        SshKeyPath = SshKeyPath,
+                        SshUser = SshUser,
+                        PlinkPath = PlinkPath
+                    },
                     file,
-                    AppendLog)));
+                    AppendLog,
+                    pullCts.Token)));
 
             AppendPullSummary(summary);
         }
@@ -439,6 +495,45 @@ public sealed partial class MainViewModel : ObservableObject
             StatusText = "Ready.";
             PullSelectedCommand.NotifyCanExecuteChanged();
             _ = RefreshBranchesAsync(Repos.Where(r => r.IsSelected).ToList());
+        }
+    }
+
+    private async Task RefreshRepoBranchesAsync()
+    {
+        IsBusy = true;
+        StatusText = "Refreshing branches...";
+
+        try
+        {
+            await RefreshBranchesAsync(Repos.ToList());
+            AppendLog("[REFRESH] Repository branches refreshed.");
+        }
+        finally
+        {
+            IsBusy = false;
+            StatusText = "Ready.";
+        }
+    }
+
+    private async Task RefreshSingleRepoBranchAsync(RepoItemViewModel? repo)
+    {
+        if (repo is null)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        StatusText = $"Refreshing branch: {repo.Name}";
+
+        try
+        {
+            await RefreshBranchAsync(repo);
+            AppendLog($"[REFRESH] Repository branch refreshed: {repo.Path}");
+        }
+        finally
+        {
+            IsBusy = false;
+            StatusText = "Ready.";
         }
     }
 
@@ -537,6 +632,25 @@ public sealed partial class MainViewModel : ObservableObject
         }
     }
 
+    private async Task RefreshStartupBranchesAsync()
+    {
+        IsBusy = true;
+        StatusText = "Refreshing startup project branches...";
+        NotifyStartupCommandsCanExecuteChanged();
+
+        try
+        {
+            await RefreshStartupProjectNumbersAsync(StartupFolders.ToList());
+            AppendLog("[REFRESH] Startup project branches refreshed.");
+        }
+        finally
+        {
+            IsBusy = false;
+            StatusText = "Ready.";
+            NotifyStartupCommandsCanExecuteChanged();
+        }
+    }
+
     private async Task CloseMappedStartupWindowAsync(Process? process)
     {
         var processId = TryGetProcessId(process);
@@ -614,9 +728,110 @@ public sealed partial class MainViewModel : ObservableObject
     private bool CanSwitchNestedRepoBranch(NestedRepoItemViewModel? repo) => !IsBusy && repo is not null;
     private bool CanRunStartupScripts() => !IsBusy && StartupFolders.Any(f => f.IsSelected);
 
+    private bool FilterRepo(object obj)
+    {
+        if (obj is not RepoItemViewModel repo)
+        {
+            return false;
+        }
+
+        var keyword = RepoSearchText?.Trim();
+        if (string.IsNullOrWhiteSpace(keyword))
+        {
+            foreach (var nestedRepo in repo.NestedRepos)
+            {
+                nestedRepo.IsSearchVisible = true;
+            }
+
+            return true;
+        }
+
+        var repoMatches = MatchesSearch(repo.BranchName, keyword)
+            || MatchesSearch(repo.Name, keyword)
+            || MatchesSearch(repo.Path, keyword)
+            || MatchesSearch(repo.ValidationMessage, keyword);
+        var nestedMatches = false;
+
+        foreach (var nestedRepo in repo.NestedRepos)
+        {
+            var nestedMatch = MatchesSearch(nestedRepo.Name, keyword)
+                || MatchesSearch(nestedRepo.Path, keyword)
+                || MatchesSearch(nestedRepo.BranchName, keyword);
+            nestedRepo.IsSearchVisible = repoMatches || nestedMatch;
+            nestedMatches |= nestedMatch;
+        }
+
+        return repoMatches || nestedMatches;
+    }
+
+    private void RefreshRepoFilter()
+    {
+        var dispatcher = System.Windows.Application.Current?.Dispatcher;
+        if (dispatcher is not null && !dispatcher.CheckAccess())
+        {
+            dispatcher.Invoke(reposView.Refresh);
+            return;
+        }
+
+        reposView.Refresh();
+    }
+
+    private static bool MatchesSearch(string? value, string keyword)
+    {
+        return !string.IsNullOrWhiteSpace(value)
+            && value.Contains(keyword, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private bool FilterStartupFolder(object obj)
+    {
+        if (obj is not StartupFolderItemViewModel folder)
+        {
+            return false;
+        }
+
+        var keyword = StartupSearchText?.Trim();
+        if (string.IsNullOrWhiteSpace(keyword))
+        {
+            return true;
+        }
+
+        return MatchesSearch(folder.ProjectNumber, keyword)
+            || MatchesSearch(folder.ProjectNumberDisplay, keyword)
+            || MatchesSearch(folder.Name, keyword)
+            || MatchesSearch(folder.Path, keyword)
+            || MatchesSearch(folder.ValidationMessage, keyword);
+    }
+
+    private void RefreshStartupFolderFilter()
+    {
+        var dispatcher = System.Windows.Application.Current?.Dispatcher;
+        if (dispatcher is not null && !dispatcher.CheckAccess())
+        {
+            dispatcher.Invoke(startupFoldersView.Refresh);
+            return;
+        }
+
+        startupFoldersView.Refresh();
+    }
+
     private void SortRepos()
     {
-        SortByRepositoryNumber(Repos, repo => repo.Name, repo => repo.Path);
+        var ordered = Repos
+            .OrderBy(repo => TryGetRepositoryNumber(repo.BranchName ?? string.Empty, repo.Path, out _) ? 0 : 1)
+            .ThenBy(repo => TryGetRepositoryNumber(repo.BranchName ?? string.Empty, repo.Path, out var number) ? number : int.MaxValue)
+            .ThenBy(repo => repo.BranchName ?? string.Empty, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(repo => repo.Name, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(repo => repo.Path, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        for (var targetIndex = 0; targetIndex < ordered.Count; targetIndex++)
+        {
+            var currentIndex = Repos.IndexOf(ordered[targetIndex]);
+            if (currentIndex != targetIndex)
+            {
+                Repos.Move(currentIndex, targetIndex);
+            }
+        }
     }
 
     private void SortStartupFolders()
@@ -772,6 +987,16 @@ public sealed partial class MainViewModel : ObservableObject
         {
             Save();
         }
+    }
+
+    partial void OnRepoSearchTextChanged(string? value)
+    {
+        RefreshRepoFilter();
+    }
+
+    partial void OnStartupSearchTextChanged(string? value)
+    {
+        RefreshStartupFolderFilter();
     }
 
     partial void OnAutoPullOnSelectionChanged(bool value)
@@ -996,8 +1221,10 @@ public sealed partial class MainViewModel : ObservableObject
                         CancellationToken.None),
                     file => gitService.DeleteConflictFileAsync(
                         conflictInfo.RepoPath,
+                        checkoutOptions,
                         file,
-                        AppendLog)));
+                        AppendLog,
+                        CancellationToken.None)));
 
             AppendLog(rc == 0
                 ? $"[DONE] git checkout {selectedBranch}: {repo.Path}"
@@ -1083,8 +1310,10 @@ public sealed partial class MainViewModel : ObservableObject
                         CancellationToken.None),
                     file => gitService.DeleteConflictFileAsync(
                         conflictInfo.RepoPath,
+                        checkoutOptions,
                         file,
-                        AppendLog)));
+                        AppendLog,
+                        CancellationToken.None)));
 
             AppendLog(rc == 0
                 ? $"[DONE] git checkout {selectedBranch}: {selectedRepoPath}"
@@ -1152,8 +1381,10 @@ public sealed partial class MainViewModel : ObservableObject
                         CancellationToken.None),
                     file => gitService.DeleteConflictFileAsync(
                         conflictInfo.RepoPath,
+                        checkoutOptions,
                         file,
-                        AppendLog)));
+                        AppendLog,
+                        CancellationToken.None)));
 
             AppendLog(rc == 0
                 ? $"[DONE] git checkout {selectedBranch}: {repo.Path}"
@@ -1171,9 +1402,12 @@ public sealed partial class MainViewModel : ObservableObject
     partial void OnIsBusyChanged(bool value)
     {
         PullSelectedCommand.NotifyCanExecuteChanged();
+        RefreshRepoBranchesCommand.NotifyCanExecuteChanged();
+        RefreshSingleRepoBranchCommand.NotifyCanExecuteChanged();
         SwitchBranchCommand.NotifyCanExecuteChanged();
         SwitchNestedBranchCommand.NotifyCanExecuteChanged();
         SwitchNestedRepoBranchCommand.NotifyCanExecuteChanged();
+        RefreshStartupBranchesCommand.NotifyCanExecuteChanged();
         NotifyStartupCommandsCanExecuteChanged();
     }
 
@@ -1219,6 +1453,7 @@ public sealed partial class MainViewModel : ObservableObject
         {
             repo.BranchName = branch;
             repo.IsBranchLoading = false;
+            SortRepos();
         }
 
         if (dispatcher is not null && !dispatcher.CheckAccess())
@@ -1231,6 +1466,8 @@ public sealed partial class MainViewModel : ObservableObject
         }
 
         await RefreshNestedRepositoriesAsync(repo);
+        Save(appendLog: false);
+        RefreshRepoFilter();
     }
 
     private async Task RefreshNestedRepositoriesAsync(RepoItemViewModel repo)
@@ -1282,6 +1519,9 @@ public sealed partial class MainViewModel : ObservableObject
         {
             await RefreshNestedBranchAsync(nestedRepo);
         }
+
+        Save(appendLog: false);
+        RefreshRepoFilter();
     }
 
     private async Task RefreshNestedBranchAsync(NestedRepoItemViewModel repo)
@@ -1328,6 +1568,9 @@ public sealed partial class MainViewModel : ObservableObject
         {
             Apply();
         }
+
+        Save(appendLog: false);
+        RefreshRepoFilter();
     }
 
     private async Task RefreshStartupProjectNumbersAsync(IEnumerable<StartupFolderItemViewModel> startupFolders)
@@ -1383,6 +1626,83 @@ public sealed partial class MainViewModel : ObservableObject
         {
             Apply();
         }
+
+        Save(appendLog: false);
+        RefreshStartupFolderFilter();
+    }
+
+    private bool CanRefreshRepoBranch(RepoItemViewModel? repo)
+        => !IsBusy && repo is not null;
+
+    private void ApplyCachedRepoState()
+    {
+        foreach (var repo in Repos)
+        {
+            if (currentSettings.RepoBranchCache.TryGetValue(repo.Path, out var branch))
+            {
+                repo.BranchName = branch;
+            }
+
+            if (!currentSettings.RepoNestedPathsCache.TryGetValue(repo.Path, out var nestedPaths) || nestedPaths is null)
+            {
+                continue;
+            }
+
+            foreach (var nestedPath in nestedPaths.Distinct(StringComparer.OrdinalIgnoreCase))
+            {
+                if (repo.NestedRepos.Any(item => string.Equals(item.Path, nestedPath, StringComparison.OrdinalIgnoreCase)))
+                {
+                    continue;
+                }
+
+                var nestedRepo = new NestedRepoItemViewModel(nestedPath);
+                if (currentSettings.NestedRepoBranchCache.TryGetValue(nestedPath, out var nestedBranch))
+                {
+                    nestedRepo.BranchName = nestedBranch;
+                }
+
+                repo.NestedRepos.Add(nestedRepo);
+            }
+        }
+    }
+
+    private void ApplyCachedStartupState()
+    {
+        foreach (var startupFolder in StartupFolders)
+        {
+            if (currentSettings.StartupProjectNumberCache.TryGetValue(startupFolder.Path, out var projectNumber))
+            {
+                startupFolder.ProjectNumber = projectNumber;
+            }
+
+            startupFolder.RefreshValidation();
+        }
+    }
+
+    private Dictionary<string, string?> BuildRepoBranchCache()
+    {
+        return Repos.ToDictionary(repo => repo.Path, repo => repo.BranchName, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private Dictionary<string, List<string>> BuildRepoNestedPathsCache()
+    {
+        return Repos.ToDictionary(
+            repo => repo.Path,
+            repo => repo.NestedRepos.Select(nested => nested.Path).Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
+            StringComparer.OrdinalIgnoreCase);
+    }
+
+    private Dictionary<string, string?> BuildNestedRepoBranchCache()
+    {
+        return Repos
+            .SelectMany(repo => repo.NestedRepos)
+            .GroupBy(repo => repo.Path, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(group => group.Key, group => group.Last().BranchName, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private Dictionary<string, string?> BuildStartupProjectNumberCache()
+    {
+        return StartupFolders.ToDictionary(folder => folder.Path, folder => folder.ProjectNumber, StringComparer.OrdinalIgnoreCase);
     }
 
     private static string QuoteArgument(string value)
