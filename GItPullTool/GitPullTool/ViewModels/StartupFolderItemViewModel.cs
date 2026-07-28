@@ -5,6 +5,9 @@ namespace GitPullTool.ViewModels;
 
 public sealed partial class StartupFolderItemViewModel : ObservableObject
 {
+    private const string PackageJsonFileName = "package.json";
+    private const string NodeModulesFolderName = "node_modules";
+
     public StartupFolderItemViewModel(string path)
     {
         Path = path;
@@ -34,6 +37,7 @@ public sealed partial class StartupFolderItemViewModel : ObservableObject
     private bool isProjectNumberLoading;
 
     public string? StartupTargetPath => ResolveStartupTargetPath();
+    public bool IsFrontendProject => HasFrontendStartFiles();
 
     public string ProjectNumberDisplay
         => IsProjectNumberLoading ? "[loading...]" : string.IsNullOrWhiteSpace(ProjectNumber) ? "[unknown]" : $"[{ProjectNumber}]";
@@ -54,6 +58,13 @@ public sealed partial class StartupFolderItemViewModel : ObservableObject
         {
             IsValid = false;
             ValidationMessage = "Folder not found";
+            return;
+        }
+
+        if (IsFrontendProject)
+        {
+            IsValid = true;
+            ValidationMessage = null;
             return;
         }
 
@@ -79,5 +90,11 @@ public sealed partial class StartupFolderItemViewModel : ObservableObject
         };
 
         return candidates.FirstOrDefault(File.Exists);
+    }
+
+    private bool HasFrontendStartFiles()
+    {
+        return File.Exists(System.IO.Path.Combine(Path, PackageJsonFileName))
+            && Directory.Exists(System.IO.Path.Combine(Path, NodeModulesFolderName));
     }
 }

@@ -555,6 +555,20 @@ public sealed partial class MainViewModel : ObservableObject
             foreach (var startupFolder in selected)
             {
                 startupFolder.RefreshValidation();
+                if (startupFolder.IsFrontendProject)
+                {
+                    if (choice == UserCodeDialogChoice.StartSystem)
+                    {
+                        StartFrontendProject(startupFolder);
+                    }
+                    else
+                    {
+                        AppendLog($"[SKIP] Frontend GUI project does not support mapping: {startupFolder.Path}");
+                    }
+
+                    continue;
+                }
+
                 if (!startupFolder.IsValid)
                 {
                     AppendLog($"[SKIP] {startupFolder.ValidationMessage}: {startupFolder.Path}");
@@ -629,6 +643,27 @@ public sealed partial class MainViewModel : ObservableObject
             IsBusy = false;
             StatusText = "Ready.";
             NotifyStartupCommandsCanExecuteChanged();
+        }
+    }
+
+    private void StartFrontendProject(StartupFolderItemViewModel startupFolder)
+    {
+        try
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = "/k npm run dev",
+                WorkingDirectory = startupFolder.Path,
+                UseShellExecute = true
+            };
+
+            Process.Start(startInfo);
+            AppendLog($"[START] npm run dev: {startupFolder.Path}");
+        }
+        catch (Exception ex)
+        {
+            AppendLog($"[FAIL] Frontend GUI start: {startupFolder.Path}; {ex.Message}");
         }
     }
 
